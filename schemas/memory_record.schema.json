@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Memory Record",
+  "type": "object",
+  "required": ["memory_id", "agent_id", "parent_workflow_step_id", "record_type", "created_at", "content"],
+  "properties": {
+    "memory_id": { "type": "string" },
+    "agent_id": { "type": "string" },
+    "parent_workflow_step_id": { "type": "string" },
+    "record_type": {
+      "type": "string",
+      "enum": ["agent_output", "skill_output", "rag_summary", "state"]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "content": {
+      "type": "object"
+    },
+    "source_refs": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
+

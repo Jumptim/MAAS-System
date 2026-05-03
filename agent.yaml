@@ -1,0 +1,64 @@
+agent:
+  id: TODO_AGENT_ID
+  name: TODO_AGENT_NAME
+  version: 0.1.0
+  description: TODO_DESCRIBE_THE_FIXED_SUBTASK_THIS_AGENT_HANDLES
+
+role:
+  title: TODO_AGENT_ROLE
+  responsibility:
+    - TODO_PRIMARY_RESPONSIBILITY
+    - TODO_SECONDARY_RESPONSIBILITY
+  out_of_scope:
+    - TODO_WHAT_THIS_AGENT_MUST_NOT_DO
+
+top_level_workflow_contract:
+  controlled_by_parent_workflow: true
+  parent_workflow_provides:
+    - task_input
+    - selected_skills
+    - skill_execution_order
+    - constraints
+  agent_must_not:
+    - change the parent workflow order
+    - call skills not listed below
+    - call MCP tools not allowed by both agent and skill
+    - query RAG resources not allowed by both agent and skill
+
+input:
+  schema: schemas/agent_input.schema.json
+  required_context:
+    - task_input
+    - parent_workflow_step_id
+
+output:
+  schema: schemas/agent_output.schema.json
+  purpose: formal output returned to the top-level workflow
+
+allowed_skills:
+  - skill.template
+
+allowed_mcp_tools:
+  - tool.template
+
+allowed_rag_resources:
+  - resource.template
+
+prompts:
+  agent_prompt: prompts/agent_prompt.md
+  skill_prompt: prompts/skill_prompt.md
+
+memory:
+  config: memory/memory.config.yaml
+  save_agent_output: true
+  save_skill_outputs: true
+
+logging:
+  enabled: true
+  log_dir: logs/
+
+failure_policy:
+  schema_validation_failed: return_structured_error
+  missing_required_input: return_structured_error
+  unauthorized_tool_or_resource: stop_and_report
+

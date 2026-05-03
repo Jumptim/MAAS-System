@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RAG Resource Manifest",
+  "type": "object",
+  "required": ["rag", "retrieval_defaults", "resources"],
+  "properties": {
+    "rag": {
+      "type": "object",
+      "required": ["enabled"],
+      "properties": {
+        "enabled": { "type": "boolean" }
+      }
+    },
+    "retrieval_defaults": { "type": "object" },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "description", "path", "type", "allowed_skills"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "path": { "type": "string" },
+          "type": { "type": "string" },
+          "allowed_skills": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}
+

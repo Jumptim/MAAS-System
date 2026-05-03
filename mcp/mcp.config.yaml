@@ -1,0 +1,23 @@
+mcp:
+  server: mcp/server.template.py
+  enabled: true
+
+policy:
+  tools_must_be_registered: true
+  tools_must_have_schemas: true
+  deny_unregistered_tool_calls: true
+  require_explicit_agent_and_skill_permission: true
+
+tools:
+  - id: tool.template
+    name: TODO_TOOL_NAME
+    description: TODO_DESCRIBE_WHAT_THIS_TOOL_DOES
+    implementation: tools/tool.template.py
+    input_schema: schemas/mcp_tool.schema.json
+    output_schema: schemas/mcp_tool.schema.json
+    permissions:
+      read_files: false
+      write_files: false
+      network: false
+      external_side_effects: false
+

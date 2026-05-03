@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Runtime outputs
+logs/*
+!logs/.gitkeep
+memory/outputs/*
+!memory/outputs/.gitkeep
+memory/state/*
+!memory/state/.gitkeep
+
+# Local environment
+.env
+.env.*
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Input",
+  "type": "object",
+  "required": ["task_input", "parent_workflow_step_id", "selected_skills"],
+  "properties": {
+    "task_input": {
+      "type": "object",
+      "description": "Subtask input provided by the top-level workflow."
+    },
+    "parent_workflow_step_id": {
+      "type": "string"
+    },
+    "selected_skills": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "skill_execution_order": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
+

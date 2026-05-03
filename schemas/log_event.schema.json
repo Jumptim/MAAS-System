@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Log Event",
+  "type": "object",
+  "required": ["event_id", "timestamp", "agent_id", "event_type", "message"],
+  "properties": {
+    "event_id": { "type": "string" },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "agent_id": { "type": "string" },
+    "parent_workflow_step_id": { "type": "string" },
+    "skill_id": { "type": "string" },
+    "tool_id": { "type": "string" },
+    "resource_id": { "type": "string" },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "agent_started",
+        "agent_finished",
+        "skill_started",
+        "skill_finished",
+        "mcp_tool_called",
+        "rag_resource_queried",
+        "memory_saved",
+        "schema_validation_failed",
+        "error"
+      ]
+    },
+    "message": { "type": "string" },
+    "details": { "type": "object" }
+  }
+}
+

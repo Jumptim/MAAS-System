@@ -1,0 +1,29 @@
+memory:
+  enabled: true
+
+save_policy:
+  save_agent_output: true
+  save_skill_outputs: true
+  save_mcp_results: false
+  save_rag_summaries: true
+  save_full_rag_text: false
+  save_prompts: false
+
+locations:
+  outputs: memory/outputs/
+  state: memory/state/
+
+retention:
+  strategy: keep_successful_outputs
+  max_records_per_agent: 100
+
+privacy:
+  redact_sensitive_fields: true
+  sensitive_field_names:
+    - api_key
+    - token
+    - password
+    - secret
+
+record_schema: schemas/memory_record.schema.json
+

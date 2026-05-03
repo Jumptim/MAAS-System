@@ -1,0 +1,25 @@
+rag:
+  enabled: true
+
+retrieval_defaults:
+  top_k: 5
+  require_citations: true
+  return_full_text: false
+
+resources:
+  - id: resource.template
+    name: TODO_RESOURCE_NAME
+    description: TODO_DESCRIBE_WHAT_KNOWLEDGE_THIS_RESOURCE_CONTAINS
+    path: documents/resource.template/
+    type: local_documents
+    allowed_skills:
+      - skill.template
+    citation_fields:
+      - resource_id
+      - document_id
+      - section
+    indexing:
+      chunk_strategy: markdown_sections
+      chunk_size_tokens: 800
+      chunk_overlap_tokens: 120
+

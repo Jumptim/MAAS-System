@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Template Schema",
+  "type": "object",
+  "required": ["agent", "role", "top_level_workflow_contract", "input", "output", "allowed_skills", "allowed_mcp_tools", "allowed_rag_resources"],
+  "properties": {
+    "agent": {
+      "type": "object",
+      "required": ["id", "name", "version", "description"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "role": { "type": "object" },
+    "top_level_workflow_contract": { "type": "object" },
+    "input": { "type": "object" },
+    "output": { "type": "object" },
+    "allowed_skills": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "allowed_mcp_tools": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "allowed_rag_resources": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
+

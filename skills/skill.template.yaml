@@ -1,0 +1,55 @@
+skill:
+  id: skill.template
+  name: TODO_SKILL_NAME
+  version: 0.1.0
+  description: TODO_DESCRIBE_THIS_REUSABLE_CAPABILITY
+
+purpose:
+  used_for:
+    - TODO_WHEN_THIS_SKILL_SHOULD_BE_USED
+  not_used_for:
+    - TODO_WHEN_THIS_SKILL_SHOULD_NOT_BE_USED
+
+input:
+  required_fields:
+    - task_context
+  optional_fields:
+    - constraints
+    - previous_skill_outputs
+    - retrieved_context
+
+execution_policy:
+  follow_parent_workflow_order: true
+  may_call_mcp: true
+  may_query_rag: true
+  must_return_schema_valid_output: true
+
+allowed_mcp_tools:
+  - tool.template
+
+allowed_rag_resources:
+  - resource.template
+
+rag_policy:
+  required: false
+  top_k: 5
+  require_citations: true
+  save_full_context_to_memory: false
+
+output:
+  schema: schemas/skill_output.schema.json
+  purpose: intermediate result used by the agent
+
+quality_checks:
+  - output matches the skill output schema
+  - claims are supported by input, MCP result, or RAG evidence
+  - limitations and uncertainty are explicit
+
+failure_modes:
+  - missing_required_input
+  - unauthorized_mcp_tool
+  - unauthorized_rag_resource
+  - mcp_tool_failed
+  - rag_resource_unavailable
+  - schema_validation_failed
+

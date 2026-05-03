@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MCP Tool Contract",
+  "type": "object",
+  "required": ["tool_id", "status", "result", "errors"],
+  "properties": {
+    "tool_id": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["success", "failed"]
+    },
+    "result": {
+      "type": "object"
+    },
+    "errors": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
+

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Skill Manifest Schema",
+  "type": "object",
+  "required": ["skill", "purpose", "input", "execution_policy", "allowed_mcp_tools", "allowed_rag_resources", "output"],
+  "properties": {
+    "skill": {
+      "type": "object",
+      "required": ["id", "name", "version", "description"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "purpose": { "type": "object" },
+    "input": { "type": "object" },
+    "execution_policy": { "type": "object" },
+    "allowed_mcp_tools": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "allowed_rag_resources": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "rag_policy": { "type": "object" },
+    "output": { "type": "object" },
+    "quality_checks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "failure_modes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
+
