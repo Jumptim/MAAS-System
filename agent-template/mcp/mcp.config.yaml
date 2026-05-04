@@ -12,7 +12,7 @@ tools:
   - id: tool.template
     name: TODO_TOOL_NAME
     description: TODO_DESCRIBE_WHAT_THIS_TOOL_DOES
-    implementation: tools/tool.template.py
+    implementation: mcp/tools/tool.template.py
     input_schema: schemas/mcp_tool.schema.json
     output_schema: schemas/mcp_tool.schema.json
     permissions:
@@ -20,4 +20,3 @@ tools:
       write_files: false
       network: false
       external_side_effects: false
-

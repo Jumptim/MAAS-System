@@ -12,6 +12,14 @@ memory/outputs/*
 memory/state/*
 !memory/state/.gitkeep
 
+# Runtime outputs inside agent folders
+**/logs/*
+!**/logs/.gitkeep
+**/memory/outputs/*
+!**/memory/outputs/.gitkeep
+**/memory/state/*
+!**/memory/state/.gitkeep
+
 # Local environment
 .env
 .env.*
@@ -19,6 +27,6 @@ memory/state/*
 # OS/editor
 .DS_Store
 Thumbs.db
+*.lnk
 .vscode/
 .idea/
-
