@@ -215,3 +215,74 @@ Register Codex skills/MCP = make Codex able to use it
 Do not put the top-level workflow inside this template.
 
 This folder describes one agent only. The top-level workflow should call this agent and provide its assigned skill order.
+
+## Output Contract Gate
+
+Each agent should have its own runtime output gate. This keeps the agent
+independent while still making its output safe for the workflow to consume.
+
+The intended execution flow is:
+
+```text
+LLM generates task-specific result JSON
+  -> agent runtime parses JSON
+  -> agent runtime validates schemas/result.schema.json
+  -> agent runtime wraps result in schemas/agent_output.schema.json
+  -> agent runtime validates the final agent output
+  -> valid output is returned to the top-level workflow
+```
+
+The LLM should not produce the full final agent output envelope directly. It
+should produce only the task-specific `result` object. The runtime owns
+`status`, `decision`, and `decision_source`.
+
+### Status
+
+`status` describes the runtime/output-contract state:
+
+- `valid`: the result parsed and validated on the first attempt.
+- `repaired`: the result failed once or more, then passed after temporary repair.
+- `invalid`: the LLM produced output, but it still violated the output contract
+  after the allowed repair attempts.
+- `failed`: the agent runtime could not complete execution, for example because
+  required input was missing, the LLM call failed, a configured schema was
+  unavailable, or a required tool/resource failed.
+
+### Decision
+
+All final agent outputs expose a workflow `decision` so the orchestrator can
+route deterministically.
+
+For normal agents, the LLM does not judge `continue`, `iterate`, or `fail`.
+The runtime sets the decision from the output contract result:
+
+```text
+valid/repaired -> continue
+invalid -> iterate or fail, according to agent.yaml
+failed -> fail
+```
+
+For evaluator agents, the LLM still returns only a result object, but that
+task-specific result schema should include:
+
+```json
+{
+  "decision": "continue | iterate | fail",
+  "target_step_id": "agent_1 or null",
+  "feedback": "short evaluator feedback for the next step"
+}
+```
+
+The runtime validates the evaluator result and promotes `result.decision` to the
+final agent output envelope with `decision_source: evaluator_judgement`. When
+`decision` is `iterate`, `target_step_id` must be a non-empty string. The
+orchestrator checks whether that target step is allowed by the workflow.
+
+### Repair Prompt Scope
+
+`prompts/output_repair_prompt.md` is temporary runtime context. It must not be
+written back to `prompts/agent_prompt.md`, `agent.yaml`, or long-term memory.
+
+Repair attempts should be logged, but they should not become part of the next
+fresh workflow invocation. This prevents format-repair instructions from
+polluting later task prompts.

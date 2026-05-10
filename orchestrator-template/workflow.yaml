@@ -1,0 +1,102 @@
+workflow:
+  id: TODO_WORKFLOW_ID
+  name: TODO_WORKFLOW_NAME
+  version: 0.1.0
+  description: TODO_DESCRIBE_THE_FIXED_MULTI_AGENT_WORKFLOW
+
+orchestrator_policy:
+  on_agent_output_invalid: fail_workflow
+  on_agent_output_failed: fail_workflow
+  on_invalid_decision: fail_workflow
+  on_disallowed_transition: fail_workflow
+  on_mapping_failed: fail_workflow
+  on_iteration_limit_reached: fail_workflow
+  max_total_iterations: 10
+
+steps:
+  - id: agent_1
+    agent:
+      id: TODO_AGENT_1_ID
+      role: normal_agent
+      description: TODO_DESCRIBE_AGENT_1_SUBTASK
+    input:
+      source: workflow_initial_input
+      mapping:
+        mode: orchestrator_default
+        mapping_id: null
+    allowed_decisions:
+      continue:
+        next_step: agent_2
+      iterate:
+        next_step: agent_1
+        max_iterations: 2
+      fail:
+        next_step: workflow_failed
+
+  - id: agent_2
+    agent:
+      id: TODO_AGENT_2_ID
+      role: normal_agent
+      description: TODO_DESCRIBE_AGENT_2_SUBTASK
+    input:
+      source: previous_step_output
+      mapping:
+        mode: orchestrator_default
+        mapping_id: null
+    allowed_decisions:
+      continue:
+        next_step: evaluator_1
+      iterate:
+        next_step: agent_2
+        max_iterations: 2
+      fail:
+        next_step: workflow_failed
+
+  - id: evaluator_1
+    agent:
+      id: TODO_EVALUATOR_AGENT_ID
+      role: evaluator_agent
+      description: TODO_DESCRIBE_EVALUATION_TASK
+    input:
+      source: previous_step_output
+      mapping:
+        mode: custom
+        mapping_id: agent2_to_evaluator
+    allowed_decisions:
+      continue:
+        next_step: agent_3
+      iterate:
+        allowed_next_steps:
+          - agent_1
+          - agent_2
+        max_iterations: 3
+        mapping:
+          mode: custom
+          mapping_id: evaluator_feedback_to_agent_input
+      fail:
+        next_step: workflow_failed
+
+  - id: agent_3
+    agent:
+      id: TODO_AGENT_3_ID
+      role: normal_agent
+      description: TODO_DESCRIBE_AGENT_3_SUBTASK
+    input:
+      source: previous_step_output
+      mapping:
+        mode: orchestrator_default
+        mapping_id: null
+    allowed_decisions:
+      continue:
+        next_step: workflow_completed
+      iterate:
+        next_step: agent_3
+        max_iterations: 2
+      fail:
+        next_step: workflow_failed
+
+terminal_steps:
+  workflow_completed:
+    status: success
+  workflow_failed:
+    status: failed

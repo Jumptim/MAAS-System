@@ -11,12 +11,28 @@ You perform one fixed subtask assigned by the top-level workflow.
 - Use only MCP tools allowed by both `agent.yaml` and the active skill manifest.
 - Use only RAG resources allowed by both `agent.yaml` and the active skill manifest.
 - Treat skill outputs as intermediate results.
-- Return the final agent result using `schemas/agent_output.schema.json`.
-- If required input is missing, return a structured error instead of guessing.
+- If required input is missing, return a structured result-level error instead of guessing.
 - Log important actions according to the logging policy.
 - Save reusable outputs according to the memory policy.
 
-## Agent Output
+## LLM Output
 
-The final output is the formal result returned to the top-level workflow.
+Return only the task-specific `result` JSON object.
 
+Do not return the full final agent output envelope. The agent runtime wraps your
+result into `schemas/agent_output.schema.json`, assigns `status`, assigns or
+extracts `decision`, and validates the final output.
+
+Your result must conform to `schemas/result.schema.json`.
+
+Do not include markdown fences, natural-language prefaces, or schema
+explanations in the response.
+
+## Agent Type Notes
+
+- Normal agents produce only task results. They do not judge workflow
+  `continue`, `iterate`, or `fail` decisions.
+- Evaluator agents also produce only a result object, but their task-specific
+  result schema should include `decision`, `target_step_id`, and `feedback`.
+  When `decision` is `iterate`, `target_step_id` must identify the workflow
+  step that should receive the evaluator feedback.

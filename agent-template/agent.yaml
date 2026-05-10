@@ -2,6 +2,7 @@ agent:
   id: TODO_AGENT_ID
   name: TODO_AGENT_NAME
   version: 0.1.0
+  type: normal
   description: TODO_DESCRIBE_THE_FIXED_SUBTASK_THIS_AGENT_HANDLES
 
 role:
@@ -33,6 +34,10 @@ input:
 
 output:
   schema: schemas/agent_output.schema.json
+  result_schema: schemas/result.schema.json
+  repair_prompt: prompts/output_repair_prompt.md
+  max_repair_attempts: 2
+  invalid_decision: iterate
   purpose: formal output returned to the top-level workflow
 
 allowed_skills:
@@ -61,4 +66,3 @@ failure_policy:
   schema_validation_failed: return_structured_error
   missing_required_input: return_structured_error
   unauthorized_tool_or_resource: stop_and_report
-

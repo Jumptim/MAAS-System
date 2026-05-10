@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Result",
+  "description": "Replace this template with the task-specific result schema for this agent.",
+  "type": "object",
+  "required": ["summary", "data"],
+  "properties": {
+    "summary": {
+      "type": "string",
+      "description": "Short task-specific result summary."
+    },
+    "data": {
+      "type": "object",
+      "description": "Task-specific structured payload. Replace with stricter fields for a real agent."
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  },
+  "additionalProperties": false
+}

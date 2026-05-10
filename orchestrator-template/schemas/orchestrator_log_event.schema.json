@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Orchestrator Log Event Schema",
+  "type": "object",
+  "required": [
+    "event_id",
+    "timestamp",
+    "run_id",
+    "workflow_id",
+    "event_type",
+    "message"
+  ],
+  "properties": {
+    "event_id": { "type": "string" },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "run_id": { "type": "string" },
+    "workflow_id": { "type": "string" },
+    "workflow_version": { "type": "string" },
+    "step_id": { "type": "string" },
+    "agent_id": { "type": "string" },
+    "mapping_id": { "type": ["string", "null"] },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "workflow_started",
+        "workflow_finished",
+        "step_started",
+        "step_finished",
+        "mapping_started",
+        "mapping_finished",
+        "decision_received",
+        "decision_accepted",
+        "decision_rejected",
+        "policy_applied",
+        "iteration_limit_reached",
+        "error"
+      ]
+    },
+    "message": { "type": "string" },
+    "agent_status": {
+      "type": "string",
+      "enum": ["valid", "repaired", "invalid", "failed"]
+    },
+    "agent_decision": {
+      "type": "string",
+      "enum": ["continue", "iterate", "fail"]
+    },
+    "decision_source": {
+      "type": "string",
+      "enum": [
+        "runtime_contract_gate",
+        "evaluator_judgement",
+        "orchestrator_policy"
+      ]
+    },
+    "decision_reason": { "type": "string" },
+    "target_step_id": { "type": ["string", "null"] },
+    "policy_action": {
+      "type": "string",
+      "enum": [
+        "accept_transition",
+        "fail_workflow",
+        "stop_for_human_review",
+        "allow_step_iteration"
+      ]
+    },
+    "policy_reason": { "type": "string" },
+    "next_step": { "type": ["string", "null"] },
+    "iteration_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "agent_output_ref": { "type": ["string", "null"] },
+    "agent_log_ref": { "type": ["string", "null"] },
+    "details": { "type": "object" }
+  },
+  "additionalProperties": false
+}

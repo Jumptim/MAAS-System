@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Evaluator Agent Result",
+  "description": "Minimal evaluator result schema. Evaluators decide the route, target step, and feedback; mappings build the next agent input.",
+  "type": "object",
+  "required": ["decision", "target_step_id", "feedback"],
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": ["continue", "iterate", "fail"]
+    },
+    "target_step_id": {
+      "type": ["string", "null"],
+      "description": "Required as a non-empty string when decision is iterate."
+    },
+    "feedback": {
+      "type": "string",
+      "description": "Evaluator feedback for the next step or for workflow logs."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "decision": { "const": "iterate" }
+        },
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "target_step_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}
