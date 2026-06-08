@@ -158,3 +158,28 @@ applies `on_disallowed_transition`.
 The transition mapping is responsible for turning evaluator feedback and prior
 outputs into the next target agent's input. Evaluator agents provide feedback;
 they do not build another agent's full prompt or runtime input directly.
+
+## YAML And Python Connection
+
+`main.py` is the Python entry point that reads YAML. `workflow.yaml` declares
+where each agent's config lives:
+
+```yaml
+agent:
+  id: analysis_agent
+  role: normal_agent
+  path: ../agents/analysis-agent
+  config: agent.yaml
+```
+
+At runtime, `main.py` loads the workflow, resolves `agent.path`, reads
+`agent.config`, and then calls the agent-side `runtime/prompt_builder.py`.
+The prompt builder reads the agent's own prompt, schema, skill, MCP, RAG, and
+memory files.
+
+Mapping files in `mappings/*.py` convert one step's final agent output into the
+next step's `task_input`. The current template includes:
+
+- `default_mapping.py`
+- `agent2_to_evaluator.py`
+- `evaluator_feedback_to_agent_input.py`

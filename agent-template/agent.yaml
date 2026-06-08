@@ -17,8 +17,6 @@ top_level_workflow_contract:
   controlled_by_parent_workflow: true
   parent_workflow_provides:
     - task_input
-    - selected_skills
-    - skill_execution_order
     - constraints
   agent_must_not:
     - change the parent workflow order
@@ -35,6 +33,7 @@ input:
 output:
   schema: schemas/agent_output.schema.json
   result_schema: schemas/result.schema.json
+  evaluator_result_schema: schemas/evaluator_result.schema.json
   repair_prompt: prompts/output_repair_prompt.md
   max_repair_attempts: 2
   invalid_decision: iterate
@@ -52,6 +51,9 @@ allowed_rag_resources:
 prompts:
   agent_prompt: prompts/agent_prompt.md
   skill_prompt: prompts/skill_prompt.md
+
+runtime:
+  prompt_builder: runtime/prompt_builder.py
 
 memory:
   config: memory/memory.config.yaml

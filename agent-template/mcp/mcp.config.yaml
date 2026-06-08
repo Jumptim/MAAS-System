@@ -1,4 +1,16 @@
 mcp:
+  enabled: true
+  shared_registry: mcp/shared/tool_registry.yaml
+  default_adapter: codex
+  adapters:
+    codex:
+      server: mcp/adapters/codex/server.py
+      config: mcp/adapters/codex/mcp.config.yaml
+    general:
+      server: mcp/adapters/general/server.py
+      config: mcp/adapters/general/config.example.yaml
+
+legacy:
   server: mcp/server.template.py
   enabled: true
 
@@ -12,9 +24,9 @@ tools:
   - id: tool.template
     name: TODO_TOOL_NAME
     description: TODO_DESCRIBE_WHAT_THIS_TOOL_DOES
-    implementation: mcp/tools/tool.template.py
-    input_schema: schemas/mcp_tool.schema.json
-    output_schema: schemas/mcp_tool.schema.json
+    implementation: mcp/shared/tools/tool_template.py
+    input_schema: mcp/shared/schemas/tool.template.input.schema.json
+    output_schema: mcp/shared/schemas/tool.template.output.schema.json
     permissions:
       read_files: false
       write_files: false

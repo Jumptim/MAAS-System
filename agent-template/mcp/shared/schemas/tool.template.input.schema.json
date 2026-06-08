@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Template MCP Tool Input",
+  "type": "object",
+  "properties": {
+    "input_text": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

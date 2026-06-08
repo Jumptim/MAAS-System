@@ -17,6 +17,25 @@ Examples of mapping responsibilities:
 
 `workflow.yaml` can reference mapping implementations by `mapping_id`.
 
+The current template includes these mapping modules:
+
+```text
+default_mapping.py
+agent2_to_evaluator.py
+evaluator_feedback_to_agent_input.py
+```
+
+Each module exposes:
+
+```python
+def map_input(previous_agent_output, next_step, workflow_state):
+    ...
+```
+
+and returns the next step's `task_input` object. `main.py` then wraps that
+`task_input` with `parent_workflow_step_id`, selected skills, skill execution
+order, and constraints before sending it to the agent-side prompt builder.
+
 Example:
 
 ```yaml

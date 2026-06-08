@@ -33,7 +33,7 @@
     },
     "decision_source": {
       "type": "string",
-      "enum": ["runtime_contract_gate", "evaluator_judgement"]
+      "enum": ["runtime_contract_gate", "evaluator_judgement", "orchestrator_policy"]
     },
     "target_step_id": {
       "type": ["string", "null"]

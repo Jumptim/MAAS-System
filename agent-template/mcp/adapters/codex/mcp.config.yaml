@@ -1,0 +1,11 @@
+# Template only. Render absolute paths when installing this agent's MCP server
+# into Codex's MCP configuration.
+server:
+  id: TODO_AGENT_MCP_SERVER_ID
+  name: TODO_AGENT_MCP_SERVER_NAME
+  transport: stdio
+  command: python
+  args:
+    - ABSOLUTE_PATH_TO_AGENT/mcp/adapters/codex/server.py
+
+shared_registry: ../../shared/tool_registry.yaml

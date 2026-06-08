@@ -23,7 +23,8 @@ Do not return the full final agent output envelope. The agent runtime wraps your
 result into `schemas/agent_output.schema.json`, assigns `status`, assigns or
 extracts `decision`, and validates the final output.
 
-Your result must conform to `schemas/result.schema.json`.
+Your result must conform to the selected task-specific result schema shown in
+the Runtime Agent Context as `result_schema_path`.
 
 Do not include markdown fences, natural-language prefaces, or schema
 explanations in the response.

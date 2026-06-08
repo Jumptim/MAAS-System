@@ -4,6 +4,10 @@ workflow:
   version: 0.1.0
   description: TODO_DESCRIBE_THE_FIXED_MULTI_AGENT_WORKFLOW
 
+workflow_input:
+  source_type: file
+  path: inputs/example_input.json
+
 orchestrator_policy:
   on_agent_output_invalid: fail_workflow
   on_agent_output_failed: fail_workflow
@@ -18,7 +22,11 @@ steps:
     agent:
       id: TODO_AGENT_1_ID
       role: normal_agent
+      path: ../agent-template
+      config: agent.yaml
       description: TODO_DESCRIBE_AGENT_1_SUBTASK
+    execution:
+      constraints: []
     input:
       source: workflow_initial_input
       mapping:
@@ -37,7 +45,11 @@ steps:
     agent:
       id: TODO_AGENT_2_ID
       role: normal_agent
+      path: ../agent-template
+      config: agent.yaml
       description: TODO_DESCRIBE_AGENT_2_SUBTASK
+    execution:
+      constraints: []
     input:
       source: previous_step_output
       mapping:
@@ -56,7 +68,12 @@ steps:
     agent:
       id: TODO_EVALUATOR_AGENT_ID
       role: evaluator_agent
+      path: ../agent-template
+      config: agent.yaml
       description: TODO_DESCRIBE_EVALUATION_TASK
+    execution:
+      constraints:
+        - Evaluate the previous agent output and decide whether revision is needed.
     input:
       source: previous_step_output
       mapping:
@@ -80,7 +97,11 @@ steps:
     agent:
       id: TODO_AGENT_3_ID
       role: normal_agent
+      path: ../agent-template
+      config: agent.yaml
       description: TODO_DESCRIBE_AGENT_3_SUBTASK
+    execution:
+      constraints: []
     input:
       source: previous_step_output
       mapping:

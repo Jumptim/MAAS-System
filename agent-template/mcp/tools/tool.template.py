@@ -1,32 +1,19 @@
-"""
-Template for one MCP tool implementation.
-
-Keep each tool narrow. A tool should expose one controlled capability, not run
-the agent workflow.
-"""
+"""Backward-compatible wrapper for the shared template MCP tool."""
 
 from __future__ import annotations
 
+from pathlib import Path
+import sys
 from typing import Any
 
+MCP_DIR = Path(__file__).resolve().parents[1]
+if str(MCP_DIR) not in sys.path:
+    sys.path.insert(0, str(MCP_DIR))
 
-TOOL_ID = "tool.template"
+from shared.tools.tool_template import TOOL_ID, run  # noqa: E402,F401
 
 
-def run(arguments: dict[str, Any]) -> dict[str, Any]:
-    """
-    Execute the tool.
+def run_legacy(arguments: dict[str, Any]) -> dict[str, Any]:
+    """Call the shared implementation from the old template path."""
 
-    TODO:
-    - define required arguments
-    - validate permissions
-    - perform the tool action
-    - return structured output
-    """
-    return {
-        "tool_id": TOOL_ID,
-        "status": "success",
-        "result": {},
-        "errors": []
-    }
-
+    return run(arguments)

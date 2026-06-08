@@ -1,0 +1,17 @@
+server:
+  name: TODO_AGENT_MCP_SERVER_NAME
+  description: MCP tools exposed by this agent template.
+
+tools:
+  - id: tool.template
+    name: TODO_TOOL_NAME
+    description: TODO_DESCRIBE_WHAT_THIS_TOOL_DOES
+    module: shared.tools.tool_template
+    function: run
+    input_schema: shared/schemas/tool.template.input.schema.json
+    output_schema: shared/schemas/tool.template.output.schema.json
+    permissions:
+      read_files: false
+      write_files: false
+      network: false
+      external_side_effects: false

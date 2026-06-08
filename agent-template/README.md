@@ -6,8 +6,7 @@ The top-level workflow decides:
 
 - when this agent runs
 - what task input it receives
-- which skills it should use
-- the order of skill execution
+- what workflow-level constraints apply
 
 This agent template defines:
 
@@ -214,7 +213,9 @@ Register Codex skills/MCP = make Codex able to use it
 
 Do not put the top-level workflow inside this template.
 
-This folder describes one agent only. The top-level workflow should call this agent and provide its assigned skill order.
+This folder describes one agent only. The top-level workflow should call this
+agent and provide task input and workflow-level constraints. The agent's own
+configuration declares its allowed skills.
 
 ## Output Contract Gate
 
@@ -286,3 +287,24 @@ written back to `prompts/agent_prompt.md`, `agent.yaml`, or long-term memory.
 Repair attempts should be logged, but they should not become part of the next
 fresh workflow invocation. This prevents format-repair instructions from
 polluting later task prompts.
+
+## Agent-Side Prompt Builder
+
+`runtime/prompt_builder.py` is the agent-side bridge from `agent.yaml` to the
+runtime. The orchestrator chooses an agent folder, then the prompt builder
+loads this agent's own configuration:
+
+```text
+agent.yaml
+prompts/agent_prompt.md
+prompts/skill_prompt.md
+skills/*.yaml
+mcp/mcp.config.yaml
+rag/resources.yaml
+memory/memory.config.yaml
+```
+
+It builds the final LLM prompt from the base prompt, agent role, permissions,
+runtime input, allowed skills, and relevant agent-side configuration. It also
+creates `AgentRuntimeConfig`, which tells `agent_runtime.py` which result
+schema, output schema, repair prompt, agent type, and repair policy to use.

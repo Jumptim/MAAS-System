@@ -1,0 +1,9 @@
+server:
+  id: TODO_AGENT_MCP_SERVER_ID
+  name: TODO_AGENT_MCP_SERVER_NAME
+  transport: stdio
+  command: python
+  args:
+    - ./mcp/adapters/general/server.py
+
+shared_registry: ../../shared/tool_registry.yaml

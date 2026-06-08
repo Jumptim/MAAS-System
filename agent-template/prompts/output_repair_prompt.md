@@ -16,5 +16,5 @@ previous answer.
 
 ## Required Response
 
-Return only one valid JSON object that conforms to the agent's
-`schemas/result.schema.json`.
+Return only one valid JSON object that conforms to the selected task-specific
+result schema for this invocation.
